@@ -1,0 +1,75 @@
+order by upload time. done👍 25.10.21  order by MediaUploadedTime DESC
+0 day ago should be today and 1 day tommorow done👍
+size should be replaced with duration done👍
+todays file not showing. done👍
+download icon for download button  done👍
+
+filenameasuploded replace by title  done👍
+show/hide button for view metadata  done👍
+//Time of media upload file was showing today 2312 hrs, corrcted to show yesterday 2312
+Buttons converted to span
+information other than already present in gallery has been paced below preview video.
+Orange color has been replaced with '#7092BE'
+Language listing in search added.
+Qsheet Name changed to CueSheet
+
+
+removed duration, user, location, synopsis from media and put in metadata.
+
+09.12.21
+1. Double click on header will show color dialog and set bg of whole application.
+2. cuesheet time was reseting to default 1st value. now ok.
+3. tecnical data put below preview.
+4. Update metadata font made larger and horizontal.
+
+10.12.21
+
+1. Cue Sheet Visible  Only to Eligible Users.Not to All => done👍
+2. DownLoad Button Only to Eligible Users.Not to All => done👍
+
+4. Improve on Colour Combination of BG and Text Colour for better readablity => done👍
+5. Audio Level Meter may be Introduced here
+6. Media Nature: It should not be 0 or 1 or 2. It Should be RAW/Finished PGM/etc.. => It is reading correctly from database.
+7. Synopsis & Remarks may be shown on Hover over some Icons like Story in NDMS
+8. Necessity of TPH ? Only TPH Ready Clips may be Displayed at Gallery => done👍
+
+10. To avoid Accidental overwriting additional Edit button may provided instead kept open always.
+11. Gradation may be selectable => done👍
+12. Favorite Selection may be available in Gallery Tab Also…
+13. Language Should be selectable => done👍
+14. Synopsis / Remarks / Translation should be Multiline => done👍
+15. Delete Option Only for Privileged User => 
+
+
+3. Total Available media Should be Displayed Here => done👍
+9. All Column Universal Search need to be provided => done👍
+5. Audio Level Meter may be Introduced here => done👍
+
+12.01.22
+1. Reset search remove the the terxt search data.
+2. All search field activateed,=> unintesaly commented out.
+3. very good, good, poor removed from gradation.
+4. deleted, synopsysy, officername, tc ok by and conetent verified by removed from main page.
+
+13.01.22
+1. Sometimes audio bar was not operating. Now ok.
+
+
+17.01.22
+1. Created a user Search field in Saerch.
+2. Created a share button visible only if loggedin user is owner of that clip.
+3. Created a method to change AccessRights to a clip.
+
+
+18.01.22
+1. index.php was not having UserName field to mix with jwttoken, Now ok.
+
+24.01.22
+1. User email added with userFullName in search box.
+2. 
+
+03.02.22
+ removed @material-ui/core, @material-ui/Icons, md5, react-beautiful-dnd.
+ media has been mapped as W drive, so that house format can be downloaded
+
+

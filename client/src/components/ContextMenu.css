@@ -1,0 +1,26 @@
+.rightClickMenu ul li{
+    padding: 3px 8px;;
+    margin: 1px; ;
+    background-color: rgb(6, 92, 107);
+  }
+  
+  .rightClickMenu ul li:hover{
+    background-color: rgb(2, 42, 49);
+    cursor: pointer ;
+   
+  }
+  .rightClickMenu ul{
+    list-style: none;
+    min-width: 180px;
+  }
+  
+  .rightClickMenu ul li ul{
+    display: none;
+    position: absolute;
+    left:139px;
+    }
+    
+  .rightClickMenu ul li:hover ul{
+  display: inline;
+  
+  }

@@ -1,0 +1,70 @@
+.paginationBttns {
+    /* width: 80%; */
+    height: 40px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: -10px;
+  }
+  
+  .paginationBttns a {
+    padding: 8px;
+    margin: 8px;
+    border-radius: 5px;
+    border: 1px solid #2b2eff;
+    color: #2b2eff;
+    cursor: pointer;
+  }
+  
+  .paginationBttns a:hover {
+    color: white;
+    background-color: #2b2eff;
+  }
+  
+  .paginationActive a {
+    color: white;
+    background-color: #2b2eff;
+  }
+  
+  .paginationDisabled a {
+    color: grey;
+    background-color: grey;
+  }
+
+  
+.user {
+  border: 2px solid rgb(250, 4, 4);
+  border-radius: 10px;
+  background-color: #b3e3ff;
+  display: inline-block;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* flex-direction: column; */
+  width: 230px;
+  height: 220px;
+  margin: 20px;
+  /* padding: 25px, 0px, 25px,0; */
+  /* text-align: center; */
+}
+
+
+.user:hover {
+  transform: scale(1.04); 
+}
+
+.is-active{
+  background-color: #f9fd05;
+}
+
+.user video{
+  border: 2px solid yellow;
+  animation-name: Yrotation;
+   animation-duration: 1s;
+}
+
+
+@keyframes Yrotation {
+  from {transform:rotatey(-90deg);}
+  to {transform:rotatey(0deg);}
+}
