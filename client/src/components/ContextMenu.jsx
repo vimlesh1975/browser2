@@ -11,6 +11,11 @@ const ContextMenu = () => {
   const activeMediaId = useSelector(state => state.video.activeMediaId);
   const dispatch = useDispatch();
   const loggedUser = useSelector(state => state.userReducer.user)
+  const media = useSelector(state => state.search.media);
+
+  const activeMediaIdDetail = media?.filter((value, index) => {
+    return (value.MediaID === activeMediaId)
+  });
 
   const updateMediaNature = (val) => {
     const payload1 = { MediaID: activeMediaId, MediaNature: val };
@@ -68,9 +73,9 @@ const ContextMenu = () => {
         alert(error)
       })
   }
-  
+
   const updateFavourite = (val) => {
-    const payload1 = { MediaID: activeMediaId, Favourite: val};
+    const payload1 = { MediaID: activeMediaId, Favourite: val };
     dispatch({ type: 'UPDATE_FAVOURITE', payload: payload1 })
     const token = getToken();
     const backEnd = process.env.REACT_APP_BACKENDHOST;
@@ -87,7 +92,7 @@ const ContextMenu = () => {
         alert(error)
       })
   }
-  
+
 
 
   return (<div>
@@ -95,23 +100,23 @@ const ContextMenu = () => {
       <ul>
 
         <li>set Media Nature<ul >
-          <li onClick={() => updateMediaNature('ROW')}>ROW</li>
-          <li onClick={() => updateMediaNature('FINISHED')}>FINISHED</li>
+          <li onClick={() => updateMediaNature('ROW')}>ROW {(activeMediaIdDetail[0].MediaNature=== 0) || (activeMediaIdDetail[0].MediaNature==='RAW')?'✅':''}</li>
+          <li onClick={() => updateMediaNature('FINISHED')}>FINISHED{(activeMediaIdDetail[0].MediaNature=== 0) || (activeMediaIdDetail[0].MediaNature==='ROW')?'':'✅'}</li>
         </ul>
         </li>
         <li>set TC<ul >
-          <li onClick={() => updateTCOK(1)}>OK</li>
-          <li onClick={() => updateTCOK(0)}>Not OK</li>
+          <li onClick={() => updateTCOK(1)}>OK {(activeMediaIdDetail[0].TechnicalCheckStatus=== 1)?'✅':''}</li>
+          <li onClick={() => updateTCOK(0)}>Not OK {(activeMediaIdDetail[0].TechnicalCheckStatus=== 1)?'':'✅'}</li>
         </ul>
         </li>
         <li>set Content OK<ul >
-          <li onClick={() => updateContentOK(1)}>OK</li>
-          <li onClick={() => updateContentOK(0)}>Not OK</li>
+          <li onClick={() => updateContentOK(1)}>OK {(activeMediaIdDetail[0].ContentVerifyStatus=== 1)?'✅':''}</li>
+          <li onClick={() => updateContentOK(0)}>Not OK {(activeMediaIdDetail[0].ContentVerifyStatus=== 1)?'':'✅'}</li>
         </ul>
         </li>
         <li>set Favourite<ul >
-          <li onClick={() => updateFavourite(1)}>Yes</li>
-          <li onClick={() => updateFavourite(0)}>No</li>
+          <li onClick={() => updateFavourite(1)}>Yes {(activeMediaIdDetail[0].Favourite=== 1)?'✅':''}</li>
+          <li onClick={() => updateFavourite(0)}>No {(activeMediaIdDetail[0].Favourite=== 1)?'':'✅'}</li>
         </ul>
         </li>
       </ul>

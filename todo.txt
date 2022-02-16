@@ -66,10 +66,19 @@ removed duration, user, location, synopsis from media and put in metadata.
 
 24.01.22
 1. User email added with userFullName in search box.
-2. 
 
 03.02.22
  removed @material-ui/core, @material-ui/Icons, md5, react-beautiful-dnd.
  media has been mapped as W drive, so that house format can be downloaded
+ Download will be Houseformat file.
+ share for editing only to editor.
+
+ 16.02.22
+ Cuesheet share form simplified.
+ share button only to owned clip
+ Removed itens from metadata update page.
+ Current Status in context menu
+
+
 
 

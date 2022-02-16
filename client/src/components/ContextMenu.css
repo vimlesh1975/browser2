@@ -2,6 +2,7 @@
     padding: 3px 8px;;
     margin: 1px; ;
     background-color: rgb(6, 92, 107);
+    text-align: left;
   }
   
   .rightClickMenu ul li:hover{

@@ -45,7 +45,7 @@ const CueSheet = () => {
                     return (<option key={uuidv4()} value={val.CueID}>{val.CueID}</option>)
                 })}
             </select>
-          <div> Selected:  {cueSheetDate} And {cueSheet}</div>
+          {/* <div> Selected:  {cueSheetDate} And {cueSheet}</div> */}
       
         </div>
     )

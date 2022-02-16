@@ -274,11 +274,11 @@ export const MediaContainer = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <CueSheet />
-                    <span style={{ backgroundColor: 'blue', color: 'white', marginBottom: '4px', marginTop: '100px', fontSize: 20, fontWeight: 'bold' }}>Enter Time Manually  for fixed Slots  OR</span>
+                    {/* <span style={{ backgroundColor: 'blue', color: 'white', marginBottom: '4px', marginTop: '100px', fontSize: 20, fontWeight: 'bold' }}>Enter Time Manually  for fixed Slots  OR</span>
                     <br /> <span style={{ backgroundColor: 'green', color: 'white', marginBottom: '4px', fontSize: 20, fontWeight: 'bold' }}>Let cuesheet decide for Auto timing OR</span>
-                    <br />   <span style={{ backgroundColor: 'grey', color: 'white', marginBottom: '4px', fontSize: 20, fontWeight: 'bold' }}> Cancel to Quit!</span>
-                    <div> <label style={{ color: 'red' }}>Enter Time for fixed slots only</label> <input onChange={e => setFixedSlot(e.target.value)} type='time' placeholder="Time to start" step="3600" /></div> {fixedSlot}
-                    <div> <button className='btn btn-info' onClick={handleSaveFixedSlot}>FIX A SLOT</button>   <button className='btn btn-success' onClick={handleSave}>LET CUESHEET DECIDE!</button><button className='btn btn-secondary' onClick={handleClose}> Cancel </button></div>
+                    <br />   <span style={{ backgroundColor: 'grey', color: 'white', marginBottom: '4px', fontSize: 20, fontWeight: 'bold' }}> Cancel to Quit!</span> */}
+                    <div> <label style={{ color: 'red' }}>Fix Slots Time</label> <input onChange={e => setFixedSlot(e.target.value)} type='time' placeholder="Time to start" step="3600" /></div> {fixedSlot}
+                    <div> <button className='btn btn-info' onClick={handleSaveFixedSlot}>Fix a slot</button>   <button className='btn btn-success' onClick={handleSave}>Let cue sheet decide</button> <button className='btn btn-secondary' onClick={handleClose}> Cancel </button></div>
                 </Modal.Body>
                 <Modal.Footer>
                 </Modal.Footer>
