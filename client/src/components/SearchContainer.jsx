@@ -118,7 +118,7 @@ export const SearchContainer = () => {
             && (verified ? value.ContentVerifyStatus : value)
             && (favourite ? value.Favourite : value)
             && (deleted ? value.Deleted : value)
-            // && ((value.MediaNature === 'FINISHED') || (value.ProducerUserID + '' === loggedUser.userInfo.UserName))
+            && ((value.MediaNature === 'FINISHED') || (value.ProducerUserID + '' === loggedUser.userInfo.UserName))
         )
     })
 

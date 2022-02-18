@@ -100,8 +100,8 @@ const ContextMenu = () => {
       <ul>
 
         <li>set Media Nature<ul >
-          <li onClick={() => updateMediaNature('ROW')}>ROW {(activeMediaIdDetail[0].MediaNature=== 0) || (activeMediaIdDetail[0].MediaNature==='RAW')?'✅':''}</li>
-          <li onClick={() => updateMediaNature('FINISHED')}>FINISHED{(activeMediaIdDetail[0].MediaNature=== 0) || (activeMediaIdDetail[0].MediaNature==='ROW')?'':'✅'}</li>
+          <li onClick={() => updateMediaNature('RAW')}>RAW {(activeMediaIdDetail[0].MediaNature=== 0) || ((activeMediaIdDetail[0].MediaNature).toLowerCase()==='raw')?'✅':''}</li>
+          <li onClick={() => updateMediaNature('FINISHED')}>FINISHED{(activeMediaIdDetail[0].MediaNature=== 0) || ((activeMediaIdDetail[0].MediaNature).toLowerCase()==='raw')?'':'✅'}</li>
         </ul>
         </li>
         <li>set TC<ul >

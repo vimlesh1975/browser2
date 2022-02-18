@@ -64,20 +64,26 @@ removed duration, user, location, synopsis from media and put in metadata.
 18.01.22
 1. index.php was not having UserName field to mix with jwttoken, Now ok.
 
+
+
+
+
+
 24.01.22
 1. User email added with userFullName in search box.
 
 03.02.22
- removed @material-ui/core, @material-ui/Icons, md5, react-beautiful-dnd.
  media has been mapped as W drive, so that house format can be downloaded
- Download will be Houseformat file.
  share for editing only to editor.
 
  16.02.22
- Cuesheet share form simplified.
+ Add to cuesheet form simplified.
  share button only to owned clip
- Removed itens from metadata update page.
- Current Status in context menu
+ Removed items from metadata update page.
+ right click menu to set media nature, TC ok , Content ok and favourite.
+ Current Status in right click menu
+ Only finished clip is visible to  All. RAW clip only to owner.
+
 
 
 
