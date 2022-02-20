@@ -116,32 +116,33 @@ export const SearchContainer = () => {
             && (new Date(toDate) >= (new Date(value.MediaUploadedTime).addDays(-1)))
             && (technicalCheckStatus ? value.TechnicalCheckStatus : value)
             && (verified ? value.ContentVerifyStatus : value)
-            && (favourite ? value.Favourite : value)
+            // && (favourite ? value.Favourite : value)
+            && (favourite ? ((value.Favourite && (value.ProducerUserID + '' === loggedUser.userInfo.UserName))) : value)
             && (deleted ? value.Deleted : value)
             && ((value.MediaNature === 'FINISHED') || (value.ProducerUserID + '' === loggedUser.userInfo.UserName))
         )
     })
 
-
     const universalSearch = val => {
         // setTextSearch(val);
         searchedMedia = media?.filter((value) => {
             return (
-                (value.Location?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.Title?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.Producer?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.AgencyName?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.OfficerName?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.Language?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.Cast_Artists?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.PriCat?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.SecCat?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.TechnicalCheckBy?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.ContentVerifiedBy?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.Synopsis?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.Gradation?.toLowerCase().search(val.toLowerCase()) > -1)
-                || (value.ProgSet?.toLowerCase().search(val.toLowerCase()) > -1)
-                // || (value.ORIGTAPENUM?.toLowerCase().search(val.toLowerCase()) > -1)
+                ((value.Location?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.Title?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.Producer?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.AgencyName?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.OfficerName?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.Language?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.Cast_Artists?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.PriCat?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.SecCat?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.TechnicalCheckBy?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.ContentVerifiedBy?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.Synopsis?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.Gradation?.toLowerCase().search(val.toLowerCase()) > -1)
+                    || (value.ProgSet?.toLowerCase().search(val.toLowerCase()) > -1)
+                )
+                && ((value.MediaNature === 'FINISHED') || (value.ProducerUserID + '' === loggedUser.userInfo.UserName))
             )
         })
         dispatch({ type: 'SET_SEARCHED_MEDIA', payload: searchedMedia });
@@ -162,7 +163,6 @@ export const SearchContainer = () => {
             .catch(error => {
             })
     }
-
 
     useEffect(() => {
         fetchMedia();
@@ -270,9 +270,7 @@ export const SearchContainer = () => {
                     </select></td>
                     </tr>
 
-
                     <tr><td>Cast_Artists</td><td><input className='SearchContainer-combo' value={cast_Artists} onChange={(e) => { setCast_Artists(e.target.value); }} type='text' placeholder='Cast_Artists' /></td></tr>
-
 
                     <tr><td>Pri Category</td><td><select className='SearchContainer-combo' onChange={(e) => {
                         setPrimaryCategory(e.target.value);

@@ -84,6 +84,11 @@ removed duration, user, location, synopsis from media and put in metadata.
  Current Status in right click menu
  Only finished clip is visible to  All. RAW clip only to owner.
 
+20.02.22
+When favourite show only own favourite
+set content verification, set media nature Set favourite menu only to owner
+TC menu show only to TD, role 19th bit=1
+
 
 
 

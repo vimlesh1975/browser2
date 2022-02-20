@@ -44,8 +44,8 @@ export const MediaContainer = () => {
     const user = useSelector(state => state.userReducer.user)
 
     const userList = useSelector(state => state.userListReducer.userList);
-    const videoEditor=userList.filter((val)=>{
-       return val.Roles==='VE'
+    const videoEditor = userList.filter((val) => {
+        return val.Roles === 'VE'
     })
 
     // const fullView = user.userInfo.ViewCode.substring(17, 18)
@@ -249,12 +249,12 @@ export const MediaContainer = () => {
                                 resumeAudioContext();
                                 dispatch({ type: 'CHANGE_VIDEO', activeMediaId: (val.MediaID), index: index, payload: `${backEnd}/pbns/dmam/LMedia/proxy1/` + val.FilenameProxy1, filename: val.FilenameProxy1 })
                             }}
-                            onContextMenu={() => {
-                                resumeAudioContext();
-                                dispatch({ type: 'CHANGE_VIDEO', activeMediaId: (val.MediaID), index: index, payload: `${backEnd}/pbns/dmam/LMedia/proxy1/` + val.FilenameProxy1, filename: val.FilenameProxy1 })
-                            }}
-                             className={activeId === index ? 'user is-active' : 'user'
-                            }>
+                                onContextMenu={() => {
+                                    resumeAudioContext();
+                                    dispatch({ type: 'CHANGE_VIDEO', activeMediaId: (val.MediaID), index: index, payload: `${backEnd}/pbns/dmam/LMedia/proxy1/` + val.FilenameProxy1, filename: val.FilenameProxy1 })
+                                }}
+                                className={activeId === index ? 'user is-active' : 'user'
+                                }>
                                 <OverlayTrigger placement="top" overlay={popSimple({ title: 'Programm Title' })}><span style={{ whiteSpace: 'nowrap', position: 'relative', top: '3px' }} className='font-weight-bold text-uppercase'>{(val.Title).substring(0, 14)}</span></OverlayTrigger><OverlayTrigger placement="right" overlay={popSimple({ title: 'Media count of The Event' })}><span className='badge badge-dark float-right mr-1 mt-1'>{mediacountbyTotal(val.ProgID, val.MediaID)}</span></OverlayTrigger><br />
                                 <video loop onMouseOver={event => event.target.play()} onMouseOut={event => { event.target.pause(); }} style={{ objectFit: 'fill' }} key={val.ThumbnailBig} className='mt-1' src={`${backEnd}/pbns/dmam/LMedia/proxy1/` + val.FilenameProxy1} poster={`${backEnd}/pbns/dmam/LMedia/th1/` + val.ThumbnailBig} alt='' width='226' height='140' ></video>
                                 <div style={{ position: 'relative', top: '4px' }}><OverlayTrigger placement="left" overlay={popoverMeta({ val })}><button style={{ display: (fullView === '1') ? '' : 'none' }} onClick={showtoqsheet} className='badge badge-dark mr-1'>CueSheet</button></OverlayTrigger> <OverlayTrigger placement="top" overlay={popoverGeneral({ title: 'TC and Content Verified', content: (val.TechnicalCheckStatus === 1) ? ((val.ContentVerifyStatus !== 1) ? 'TC OK - Yes,Content Verified - No' : 'TC OK - Yes, Content Verified - Yes') : ((val.ContentVerifyStatus !== 1) ? 'TC OK - No,Content Verified-No' : 'TC OK - No, Content Verified-Yes') })}><span className='badge badge-light mr-3'><span style={(val.TechnicalCheckStatus === 1) ? { color: 'green' } : { color: 'red' }}>T/</span><span style={(val.ContentVerifyStatus === 1) ? { color: 'green' } : { color: 'red' }}>C</span></span></OverlayTrigger><OverlayTrigger placement="right" overlay={popSimple({ title: 'Click to Download' })}><button style={{ display: ((fullView === '1') && ((window.location.href.includes('localhost')) || (window.location.href.includes('192.')))) ? 'inline' : 'none' }} className='badge badge-light' onClick={() => download(`${backEnd}/pbns/dmam/Media/HouseFormat/${val.HouseFormat}`, `${val.HouseFormat}`)}><DownloadIcon style={{ fontSize: '18px', width: 25, height: 12 }} /></button></OverlayTrigger>
