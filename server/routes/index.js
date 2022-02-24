@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const mysql = require("mysql");
-const moment=require('moment');
+const moment = require('moment');
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const secret = 'VimleshKumar@123';
@@ -10,8 +10,13 @@ const cors = require("cors");
 // router.use(express.json());
 const fs = require("fs"); //Load the filesystem module
 var serveStatic = require("serve-static");
-router.use('/pbns/dmam/LMedia', serveStatic('X:\\'));
-router.use('/pbns/dmam/Media', serveStatic('W:\\'));
+
+// router.use('/pbns/dmam/LMedia', serveStatic('X:\\'));
+// router.use('/pbns/dmam/Media', serveStatic('W:\\'));
+const rootPath = 'c:/inetpub/wwwroot/pbns/dmam/';
+router.use('/pbns/dmam/LMedia', serveStatic(rootPath + '/Lmedia'));
+router.use('/pbns/dmam/Media', serveStatic(rootPath + '/Media'));
+
 
 // pbns/dmam/Media/HouseFormat
 // const filename = "x:/th1/TSD01_2021OCT13_070335_th1.jpg";
@@ -36,7 +41,7 @@ router.use('/login', (req, res) => {
       bcrypt.compare(req.body.passWord, result[0].Pwd.replace(/^\$2y(.+)$/i, '$2a$1')).then((result1) => {
         if (result1) {
           // var token = jwt.sign({ UserName: result[0].UserName, FullName: result[0].FullName,ViewCode:result[0].ViewCode }, secret);
-          var token = jwt.sign({ userInfo:result[0] }, secret);
+          var token = jwt.sign({ userInfo: result[0] }, secret);
           res.send({
             token: token// result[0]?.Token
           });
@@ -112,26 +117,26 @@ router.get("/getCueSheets", (req, res) => {
 });
 
 router.put("/insertInCueSheet", (req, res) => {
-  const sqlquery =`INSERT INTO cuesheet (pgmID, cueID, UserID, Programname,filename, myDate,INpoint, OUTpoint,Duration,Remarks,fromreading,toreading,hiresfilename,islive,HiResFileTransfer,myCuedate,slot) 
+  const sqlquery = `INSERT INTO cuesheet (pgmID, cueID, UserID, Programname,filename, myDate,INpoint, OUTpoint,Duration,Remarks,fromreading,toreading,hiresfilename,islive,HiResFileTransfer,myCuedate,slot) 
   VALUES ('${req.body.pgmID}', '${req.body.cueID}', '${req.body.UserID}', '${req.body.Programname}','${req.body.filename}', '${req.body.myDate}', '${req.body.INpoint}', '${req.body.OUTpoint}', '${req.body.Duration}', '${req.body.Remarks}', '${req.body.fromreading}', '${req.body.toreading}', '${req.body.hiresfilename}', '${req.body.islive}' ,'${req.body.HiResFileTransfer}','${req.body.myCuedate}','${req.body.slot}')`
   const db = getdb();
   // console.log(Story);
-  db.query(sqlquery,(err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
+  db.query(sqlquery, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
     }
+  }
   );
   db.end();
 });
 
 router.get("/getmedia", (req, res) => {
   // const sqlquery = `SELECT *, media.Remarks as mediaRemarks from ((media inner join technicaldata on media.MediaID=technicaldata.MediaID) inner join metadata on media.MediaID=metadata.MediaID)  order by MediaUploadedTime DESC`;
-  const sqlquery =`SELECT *, media.Remarks as mediaRemarks from (((media inner join technicaldata on media.MediaID=technicaldata.MediaID) inner join metadata on media.MediaID=metadata.MediaID)inner join upload on substring(media.MediaID,1,LENGTH(media.MediaID)-4)=upload.ProgID) where ALLReady=1 order by MediaUploadedTime DESC`;
+  const sqlquery = `SELECT *, media.Remarks as mediaRemarks from (((media inner join technicaldata on media.MediaID=technicaldata.MediaID) inner join metadata on media.MediaID=metadata.MediaID)inner join upload on substring(media.MediaID,1,LENGTH(media.MediaID)-4)=upload.ProgID) where ALLReady=1 order by MediaUploadedTime DESC`;
   // const sqlquery =`SELECT *, media.Remarks as mediaRemarks from (((media inner join technicaldata on media.MediaID=technicaldata.MediaID) inner join metadata on media.MediaID=metadata.MediaID)inner join upload on substring(media.MediaID,1,22)=upload.ProgID) where ALLReady=1 order by MediaUploadedTime DESC`;
- 
+
   const db = getdb();
   db.query(sqlquery, (err, result) => {
     if (err) {
