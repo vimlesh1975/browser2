@@ -13,23 +13,28 @@ var serveStatic = require("serve-static");
 
 // router.use('/pbns/dmam/LMedia', serveStatic('X:\\'));
 // router.use('/pbns/dmam/Media', serveStatic('W:\\'));
+var user, host, password, database;
+var exec = require("child_process").exec;
+exec(
+  'php.exe -r "include(\'c:/inetpub/wwwroot/pbnscred.php\');echo $servername.\'#@#\'.$username.\'#@#\'.$password.\'#@#\'.$dbname";',
+  function (error, stdout, stderr) {
+    var [servername, username, password1, dbname] = stdout.split('#@#');
+    console.log(error);
+    console.log(stdout);
+    console.log(stderr);
+
+    user=username;
+    host=servername;
+    password=password1;
+    database=dbname;
+
+    console.log(host)
+
+  })
+
 const rootPath = 'c:/inetpub/wwwroot/pbns/dmam/';
 router.use('/pbns/dmam/LMedia', serveStatic(rootPath + '/Lmedia'));
 router.use('/pbns/dmam/Media', serveStatic(rootPath + '/Media'));
-
-
-// pbns/dmam/Media/HouseFormat
-// const filename = "x:/th1/TSD01_2021OCT13_070335_th1.jpg";
-// function getFilesizeInBytes(filename) {
-//   const stats = fs.statSync(filename);
-//   const fileSizeInBytes = (stats.size / 1000).toFixed(0) + ' KB';
-//   return fileSizeInBytes;
-// }
-// console.log(getFilesizeInBytes(filename))
-// router.get('/getfilesize', function (req, res, next) {
-//   // console.log(req.query.filename);
-//   res.send(getFilesizeInBytes('y:/th1/' + req.query.filename));
-// });
 
 router.use('/login', (req, res) => {
   const sqlquery = `SELECT * FROM users where UserName='${req.body.userName}'`;
@@ -92,6 +97,19 @@ router.get('/', function (req, res, next) {
   // console.log(req.url);
   res.render('index', { title: 'Express' });
 });
+
+
+
+  function getdb1() {
+    const db = mysql.createConnection({
+      user:user,
+      host:host,
+      password:password,
+      database:database
+    });
+    return db;
+  }
+
 function getdb() {
   const db = mysql.createConnection({
     user: "itmaint",
@@ -344,6 +362,7 @@ router.delete("/delete/:id", (req, res) => {
   });
   db.end();
 });
+
 
 
 module.exports = router;
