@@ -1,10 +1,11 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const mysql = require("mysql");
-const moment = require('moment');
-var jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const secret = 'VimleshKumar@123';
+// const mysql = require("mysql");
+const mysql = require("mysql2");
+const moment = require("moment");
+var jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const secret = "VimleshKumar@123";
 const cors = require("cors");
 // router.use(cors)
 // router.use(express.json());
@@ -16,53 +17,56 @@ var serveStatic = require("serve-static");
 var user, host, password, database;
 var exec = require("child_process").exec;
 exec(
-  'php.exe -r "include(\'c:/inetpub/wwwroot/pbnscred.php\');echo $servername.\'#@#\'.$username.\'#@#\'.$password.\'#@#\'.$dbname";',
+  "php.exe -r \"include('c:/inetpub/wwwroot/pbnscred.php');echo $servername.'#@#'.$username.'#@#'.$password.'#@#'.$dbname\";",
   function (error, stdout, stderr) {
-    var [servername, username, password1, dbname] = stdout.split('#@#');
+    var [servername, username, password1, dbname] = stdout.split("#@#");
     console.log(error);
     console.log(stdout);
     console.log(stderr);
 
-    user=username;
-    host=servername;
-    password=password1;
-    database=dbname;
+    user = username;
+    host = servername;
+    password = password1;
+    database = dbname;
 
-    console.log(host)
+    console.log(host);
+  }
+);
 
-  })
+const rootPath = "c:/inetpub/wwwroot/pbns/dmam/";
+router.use("/pbns/dmam/LMedia", serveStatic(rootPath + "/Lmedia"));
+router.use("/pbns/dmam/Media", serveStatic(rootPath + "/Media"));
 
-const rootPath = 'c:/inetpub/wwwroot/pbns/dmam/';
-router.use('/pbns/dmam/LMedia', serveStatic(rootPath + '/Lmedia'));
-router.use('/pbns/dmam/Media', serveStatic(rootPath + '/Media'));
-
-router.use('/login', (req, res) => {
+router.use("/login", (req, res) => {
   const sqlquery = `SELECT * FROM users where UserName='${req.body.userName}'`;
   const db = getdb();
   db.query(sqlquery, (err, result) => {
     if (err) {
       console.log(err);
     } else if (result.length > 0) {
-      bcrypt.compare(req.body.passWord, result[0].Pwd.replace(/^\$2y(.+)$/i, '$2a$1')).then((result1) => {
-        if (result1) {
-          // var token = jwt.sign({ UserName: result[0].UserName, FullName: result[0].FullName,ViewCode:result[0].ViewCode }, secret);
-          var token = jwt.sign({ userInfo: result[0] }, secret);
-          res.send({
-            token: token// result[0]?.Token
-          });
-        }
-        else {
-          console.log(`UserName/Password didn't match`)
-          res.send({
-            token: `UserName/Password didn't match`// result[0]?.Token
-          });
-        }
-      })
-    }
-    else {
-      console.log('User not Found')
+      bcrypt
+        .compare(
+          req.body.passWord,
+          result[0].Pwd.replace(/^\$2y(.+)$/i, "$2a$1")
+        )
+        .then((result1) => {
+          if (result1) {
+            // var token = jwt.sign({ UserName: result[0].UserName, FullName: result[0].FullName,ViewCode:result[0].ViewCode }, secret);
+            var token = jwt.sign({ userInfo: result[0] }, secret);
+            res.send({
+              token: token, // result[0]?.Token
+            });
+          } else {
+            console.log(`UserName/Password didn't match`);
+            res.send({
+              token: `UserName/Password didn't match`, // result[0]?.Token
+            });
+          }
+        });
+    } else {
+      console.log("User not Found");
       res.send({
-        token: `User not Found`
+        token: `User not Found`,
       });
     }
   });
@@ -74,41 +78,39 @@ router.use(async (req, res, next) => {
     const accessToken = req.headers["authorization"];
     jwt.verify(accessToken, secret, (err, decoded) => {
       if (err) {
-        console.log('not verified');
+        console.log("not verified");
         return res.status(401).json({
-          error: "Not verified"
+          error: "Not verified",
         });
       }
       if (decoded) {
         console.log(decoded.userInfo.UserName);
       }
-    })
+    });
 
-    next()
+    next();
   } else {
-    console.log("Not Authorised")
+    console.log("Not Authorised");
     return res.status(401).json({
-      error: "Not Authorised"
+      error: "Not Authorised",
     });
   }
 });
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get("/", function (req, res, next) {
   // console.log(req.url);
-  res.render('index', { title: 'Express' });
+  res.render("index", { title: "Express" });
 });
 
-
-
-  function getdb1() {
-    const db = mysql.createConnection({
-      user:user,
-      host:host,
-      password:password,
-      database:database
-    });
-    return db;
-  }
+function getdb1() {
+  const db = mysql.createConnection({
+    user: user,
+    host: host,
+    password: password,
+    database: database,
+  });
+  return db;
+}
 
 function getdb() {
   const db = mysql.createConnection({
@@ -136,7 +138,7 @@ router.get("/getCueSheets", (req, res) => {
 
 router.put("/insertInCueSheet", (req, res) => {
   const sqlquery = `INSERT INTO cuesheet (pgmID, cueID, UserID, Programname,filename, myDate,INpoint, OUTpoint,Duration,Remarks,fromreading,toreading,hiresfilename,islive,HiResFileTransfer,myCuedate,slot) 
-  VALUES ('${req.body.pgmID}', '${req.body.cueID}', '${req.body.UserID}', '${req.body.Programname}','${req.body.filename}', '${req.body.myDate}', '${req.body.INpoint}', '${req.body.OUTpoint}', '${req.body.Duration}', '${req.body.Remarks}', '${req.body.fromreading}', '${req.body.toreading}', '${req.body.hiresfilename}', '${req.body.islive}' ,'${req.body.HiResFileTransfer}','${req.body.myCuedate}','${req.body.slot}')`
+  VALUES ('${req.body.pgmID}', '${req.body.cueID}', '${req.body.UserID}', '${req.body.Programname}','${req.body.filename}', '${req.body.myDate}', '${req.body.INpoint}', '${req.body.OUTpoint}', '${req.body.Duration}', '${req.body.Remarks}', '${req.body.fromreading}', '${req.body.toreading}', '${req.body.hiresfilename}', '${req.body.islive}' ,'${req.body.HiResFileTransfer}','${req.body.myCuedate}','${req.body.slot}')`;
   const db = getdb();
   // console.log(Story);
   db.query(sqlquery, (err, result) => {
@@ -145,8 +147,7 @@ router.put("/insertInCueSheet", (req, res) => {
     } else {
       res.send(result);
     }
-  }
-  );
+  });
   db.end();
 });
 
@@ -160,7 +161,7 @@ router.get("/getmedia", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(result.length)
+      console.log(result.length);
       res.send(result);
     }
   });
@@ -204,7 +205,6 @@ router.get("/getstates", (req, res) => {
   });
   db.end();
 });
-
 
 router.get("/getAllPrimaryCategory", (req, res) => {
   const db = getdb();
@@ -258,7 +258,6 @@ router.put("/update", (req, res) => {
   db.end();
 });
 
-
 router.put("/updateMediadata", (req, res) => {
   const db = getdb();
   // console.log(req.body.Remarks);
@@ -308,7 +307,13 @@ router.put("/updateMediaNature", (req, res) => {
 router.put("/updateTCOK", (req, res) => {
   const db = getdb();
   db.query(
-    `UPDATE media SET TechnicalCheckStatus ='${req.body.TechnicalCheckStatus}' ,  TechnicalCheckBy='${req.body.TechnicalCheckBy}' , TechnicalCheckTime='${moment(new Date().toISOString()).format("yyyy-MM-DDTHH:mm:ss")}'  WHERE MediaID ='${req.body.MediaID}'`,
+    `UPDATE media SET TechnicalCheckStatus ='${
+      req.body.TechnicalCheckStatus
+    }' ,  TechnicalCheckBy='${
+      req.body.TechnicalCheckBy
+    }' , TechnicalCheckTime='${moment(new Date().toISOString()).format(
+      "yyyy-MM-DDTHH:mm:ss"
+    )}'  WHERE MediaID ='${req.body.MediaID}'`,
     (err, result) => {
       if (err) {
         // console.log(err);
@@ -323,7 +328,13 @@ router.put("/updateTCOK", (req, res) => {
 router.put("/updateContentOK", (req, res) => {
   const db = getdb();
   db.query(
-    `UPDATE media SET ContentVerifyStatus ='${req.body.ContentVerifyStatus}' ,  ContentVerifiedBy='${req.body.ContentVerifiedBy}' , ContentVerifiedTime='${moment(new Date().toISOString()).format("yyyy-MM-DDTHH:mm:ss")}'  WHERE MediaID ='${req.body.MediaID}'`,
+    `UPDATE media SET ContentVerifyStatus ='${
+      req.body.ContentVerifyStatus
+    }' ,  ContentVerifiedBy='${
+      req.body.ContentVerifiedBy
+    }' , ContentVerifiedTime='${moment(new Date().toISOString()).format(
+      "yyyy-MM-DDTHH:mm:ss"
+    )}'  WHERE MediaID ='${req.body.MediaID}'`,
     (err, result) => {
       if (err) {
         // console.log(err);
@@ -362,7 +373,5 @@ router.delete("/delete/:id", (req, res) => {
   });
   db.end();
 });
-
-
 
 module.exports = router;
