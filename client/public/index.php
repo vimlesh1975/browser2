@@ -24,7 +24,7 @@ $payload1=['userInfo' => $payload];
 
 $secret = 'VimleshKumar@123';
 
-$token = Token::customPayload($payload, $secret);
+$token = Token::customPayload($payload1, $secret);
 //echo $token;
 ?>
 <!DOCTYPE html>
