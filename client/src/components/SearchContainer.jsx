@@ -119,7 +119,7 @@ export const SearchContainer = () => {
             // && (favourite ? value.Favourite : value)
             && (favourite ? ((value.Favourite && (value.ProducerUserID + '' === loggedUser.userInfo.UserName))) : value)
             && (deleted ? value.Deleted : value)
-            && ((value.MediaNature === 'FINISHED') || (value.ProducerUserID + '' === loggedUser.userInfo.UserName))
+            && ((value.MediaNature.toUpperCase() === 'FINISHED') || (value.ProducerUserID + '' === loggedUser.userInfo.UserName))
         )
     })
 
