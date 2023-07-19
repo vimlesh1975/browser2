@@ -45,7 +45,7 @@ $token = Token::customPayload($payload1, $secret);
         "token": jwt
     }));
     setTimeout(function() {
-        location.replace("http://183.82.113.8/pbns/dmam/browser/index.html");
+        location.replace("./index.html");
     }, 1000);
     //location.replace("index.html")
 
